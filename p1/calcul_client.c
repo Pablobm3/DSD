@@ -8,7 +8,7 @@
 
 
 float
-calculate_prog_1(char *host,float n1,float n2,char opr,CLIENT *clnt)
+calculate_prog1_1(char *host,float n1,float n2,char opr,CLIENT *clnt)
 {
 	
 	float  *result_1;
@@ -19,6 +19,8 @@ calculate_prog_1(char *host,float n1,float n2,char opr,CLIENT *clnt)
 	inputs  mult_1_arg;
 	float  *result_4;
 	inputs  div_1_arg;
+	float  *result_5;
+	inputs  pot_1_arg;
 
 if(opr=='+'){
 
@@ -79,6 +81,19 @@ else if(opr=='/'){
 	
 }
 
+else if(opr=='^'){
+	pot_1_arg.a=n1;
+	pot_1_arg.b=n2;
+	pot_1_arg.c=opr;
+	result_5 = pot_1(&pot_1_arg, clnt);
+	if (result_5 == (float *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+
+	return *result_5;
+}
+
+
 
 
 
@@ -100,7 +115,7 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	
-	printf("Bienvenido a la calculadora de Pablo");
+	printf("Bienvenido a la calculadora de Pablo\n");
 	
 	printf("Inserte el primer numero :\n");
 	scanf("%f",&a);
@@ -109,7 +124,7 @@ main (int argc, char *argv[])
 	scanf("%f",&b);
 
 	printf("Inserte operador :\n");
-	printf("+ para Suma\n - para Resta\n * para Multiplicacion\n / para Division\n");
+	printf("+ para Suma\n - para Resta\n * para Multiplicacion\n / para Division\n ^ para potencia\n");
 	scanf("%s",&op);
 	
 	
@@ -119,14 +134,14 @@ main (int argc, char *argv[])
 	//calc_1 (host);
 
 	#ifndef	DEBUG
-	clnt = clnt_create (host, CALCULATE_PROG, CALCULATE_VER, "udp");
+	clnt = clnt_create (host, CALCULATE_PROG1, CALCULATE_VER1, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
-	printf("El resultado es %.2f\n",calculate_prog_1(host,a,b,op,clnt));
+	printf("El resultado es %.2f\n",calculate_prog1_1(host,a,b,op,clnt));
 	
 	
 #ifndef	DEBUG

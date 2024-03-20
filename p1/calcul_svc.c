@@ -17,13 +17,14 @@
 #endif
 
 static void
-calculate_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
+calculate_prog1_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		inputs sum_1_arg;
 		inputs res_1_arg;
 		inputs mult_1_arg;
 		inputs div_1_arg;
+		inputs pot_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -58,6 +59,12 @@ calculate_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		local = (char *(*)(char *, struct svc_req *)) div_1_svc;
 		break;
 
+	case pot:
+		_xdr_argument = (xdrproc_t) xdr_inputs;
+		_xdr_result = (xdrproc_t) xdr_float;
+		local = (char *(*)(char *, struct svc_req *)) pot_1_svc;
+		break;
+
 	default:
 		svcerr_noproc (transp);
 		return;
@@ -83,15 +90,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (CALCULATE_PROG, CALCULATE_VER);
+	pmap_unset (CALCULATE_PROG1, CALCULATE_VER1);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, CALCULATE_PROG, CALCULATE_VER, calculate_prog_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (CALCULATE_PROG, CALCULATE_VER, udp).");
+	if (!svc_register(transp, CALCULATE_PROG1, CALCULATE_VER1, calculate_prog1_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (CALCULATE_PROG1, CALCULATE_VER1, udp).");
 		exit(1);
 	}
 
@@ -100,8 +107,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, CALCULATE_PROG, CALCULATE_VER, calculate_prog_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (CALCULATE_PROG, CALCULATE_VER, tcp).");
+	if (!svc_register(transp, CALCULATE_PROG1, CALCULATE_VER1, calculate_prog1_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (CALCULATE_PROG1, CALCULATE_VER1, tcp).");
 		exit(1);
 	}
 

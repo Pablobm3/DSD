@@ -7,6 +7,7 @@
 #define _CALCUL_H_RPCGEN
 
 #include <rpc/rpc.h>
+#include <math.h>
 
 
 #ifdef __cplusplus
@@ -21,8 +22,8 @@ struct inputs {
 };
 typedef struct inputs inputs;
 
-#define CALCULATE_PROG 0x2fffffff
-#define CALCULATE_VER 1
+#define CALCULATE_PROG1 0x2ffffffff
+#define CALCULATE_VER1 1
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define sum 1
@@ -37,7 +38,10 @@ extern  float * mult_1_svc(inputs *, struct svc_req *);
 #define div 4
 extern  float * div_1(inputs *, CLIENT *);
 extern  float * div_1_svc(inputs *, struct svc_req *);
-extern int calculate_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
+#define pot 5
+extern  float * pot_1(inputs *, CLIENT *);
+extern  float * pot_1_svc(inputs *, struct svc_req *);
+extern int calculate_prog1_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define sum 1
@@ -52,7 +56,10 @@ extern  float * mult_1_svc();
 #define div 4
 extern  float * div_1();
 extern  float * div_1_svc();
-extern int calculate_prog_1_freeresult ();
+#define pot 5
+extern  float * pot_1();
+extern  float * pot_1_svc();
+extern int calculate_prog1_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */

@@ -5,12 +5,12 @@
  */
 
 #include "calcul.h"
+#include <math.h>
+#include <stdio.h>
 
 float *
 sum_1_svc(inputs *argp, struct svc_req *rqstp)
 {
-	
-
 	static float  result;
 
 	result = argp ->a+argp->b;
@@ -43,7 +43,7 @@ mult_1_svc(inputs *argp, struct svc_req *rqstp)
 
 	result = argp ->a * argp->b;
 
-	printf("Recibida la solicitud de resta de %.2f y %.2f\n",argp ->a,argp->b);
+	printf("Recibida la solicitud de multiplicacion de %.2f y %.2f\n",argp ->a,argp->b);
 
 	printf("Resultado enviado: %.2f\n",result);
 
@@ -57,7 +57,25 @@ div_1_svc(inputs *argp, struct svc_req *rqstp)
 
 	result = argp ->a / argp->b;
 
-	printf("Recibida la solicitud de resta de %.2f y %.2f\n",argp ->a,argp->b);
+	printf("Recibida la solicitud de division de %.2f y %.2f\n",argp ->a,argp->b);
+
+	printf("Resultado enviado: %.2f\n",result);
+
+	return &result;
+}
+
+float *
+pot_1_svc(inputs *argp, struct svc_req *rqstp)
+{
+	static float  result;
+
+	static double potencia;
+
+	potencia = pow(argp ->a, argp->b);
+
+	result = (float)potencia;
+
+	printf("Recibida la solicitud de potencia de %.2f y %.2f\n",argp ->a,argp->b);
 
 	printf("Resultado enviado: %.2f\n",result);
 
