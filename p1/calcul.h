@@ -7,7 +7,6 @@
 #define _CALCUL_H_RPCGEN
 
 #include <rpc/rpc.h>
-#include <math.h>
 
 
 #ifdef __cplusplus
@@ -21,6 +20,18 @@ struct inputs {
 	float c;
 };
 typedef struct inputs inputs;
+
+struct vectores {
+	struct {
+		u_int float_array1_len;
+		float *float_array1_val;
+	} float_array1;
+	struct {
+		u_int float_array2_len;
+		float *float_array2_val;
+	} float_array2;
+};
+typedef struct vectores vectores;
 
 #define CALCULATE_PROG1 0x2ffffffff
 #define CALCULATE_VER1 1
@@ -41,6 +52,15 @@ extern  float * div_1_svc(inputs *, struct svc_req *);
 #define pot 5
 extern  float * pot_1(inputs *, CLIENT *);
 extern  float * pot_1_svc(inputs *, struct svc_req *);
+#define vector_sum 6
+extern  float * vector_sum_1(vectores *, CLIENT *);
+extern  float * vector_sum_1_svc(vectores *, struct svc_req *);
+#define vector_res 7
+extern  float * vector_res_1(vectores *, CLIENT *);
+extern  float * vector_res_1_svc(vectores *, struct svc_req *);
+#define vector_mult 8
+extern  float * vector_mult_1(vectores *, CLIENT *);
+extern  float * vector_mult_1_svc(vectores *, struct svc_req *);
 extern int calculate_prog1_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -59,6 +79,15 @@ extern  float * div_1_svc();
 #define pot 5
 extern  float * pot_1();
 extern  float * pot_1_svc();
+#define vector_sum 6
+extern  float * vector_sum_1();
+extern  float * vector_sum_1_svc();
+#define vector_res 7
+extern  float * vector_res_1();
+extern  float * vector_res_1_svc();
+#define vector_mult 8
+extern  float * vector_mult_1();
+extern  float * vector_mult_1_svc();
 extern int calculate_prog1_1_freeresult ();
 #endif /* K&R C */
 
@@ -66,9 +95,11 @@ extern int calculate_prog1_1_freeresult ();
 
 #if defined(__STDC__) || defined(__cplusplus)
 extern  bool_t xdr_inputs (XDR *, inputs*);
+extern  bool_t xdr_vectores (XDR *, vectores*);
 
 #else /* K&R C */
 extern bool_t xdr_inputs ();
+extern bool_t xdr_vectores ();
 
 #endif /* K&R C */
 

@@ -25,6 +25,9 @@ calculate_prog1_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		inputs mult_1_arg;
 		inputs div_1_arg;
 		inputs pot_1_arg;
+		vectores vector_sum_1_arg;
+		vectores vector_res_1_arg;
+		vectores vector_mult_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -63,6 +66,24 @@ calculate_prog1_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		_xdr_argument = (xdrproc_t) xdr_inputs;
 		_xdr_result = (xdrproc_t) xdr_float;
 		local = (char *(*)(char *, struct svc_req *)) pot_1_svc;
+		break;
+
+	case vector_sum:
+		_xdr_argument = (xdrproc_t) xdr_vectores;
+		_xdr_result = (xdrproc_t) xdr_float;
+		local = (char *(*)(char *, struct svc_req *)) vector_sum_1_svc;
+		break;
+
+	case vector_res:
+		_xdr_argument = (xdrproc_t) xdr_vectores;
+		_xdr_result = (xdrproc_t) xdr_float;
+		local = (char *(*)(char *, struct svc_req *)) vector_res_1_svc;
+		break;
+
+	case vector_mult:
+		_xdr_argument = (xdrproc_t) xdr_vectores;
+		_xdr_result = (xdrproc_t) xdr_float;
+		local = (char *(*)(char *, struct svc_req *)) vector_mult_1_svc;
 		break;
 
 	default:

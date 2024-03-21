@@ -18,3 +18,17 @@ xdr_inputs (XDR *xdrs, inputs *objp)
 		 return FALSE;
 	return TRUE;
 }
+
+bool_t
+xdr_vectores (XDR *xdrs, vectores *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_array (xdrs, (char **)&objp->float_array1.float_array1_val, (u_int *) &objp->float_array1.float_array1_len, ~0,
+		sizeof (float), (xdrproc_t) xdr_float))
+		 return FALSE;
+	 if (!xdr_array (xdrs, (char **)&objp->float_array2.float_array2_val, (u_int *) &objp->float_array2.float_array2_len, ~0,
+		sizeof (float), (xdrproc_t) xdr_float))
+		 return FALSE;
+	return TRUE;
+}

@@ -83,3 +83,48 @@ pot_1(inputs *argp, CLIENT *clnt)
 	}
 	return (&clnt_res);
 }
+
+float *
+vector_sum_1(vectores *argp, CLIENT *clnt)
+{
+	static float clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, vector_sum,
+		(xdrproc_t) xdr_vectores, (caddr_t) argp,
+		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+float *
+vector_res_1(vectores *argp, CLIENT *clnt)
+{
+	static float clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, vector_res,
+		(xdrproc_t) xdr_vectores, (caddr_t) argp,
+		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+float *
+vector_mult_1(vectores *argp, CLIENT *clnt)
+{
+	static float clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, vector_mult,
+		(xdrproc_t) xdr_vectores, (caddr_t) argp,
+		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
